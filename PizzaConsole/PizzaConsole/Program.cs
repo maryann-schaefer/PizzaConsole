@@ -12,12 +12,22 @@ namespace PizzaConsole
   {
     static void Main(string[] args)
     {
+      //Get list of top 20 pizzas
       List<PizzaModel> pizzaList = Top20Pizzas();
-      int i = 1;
+
+      //Create tab-delimited text file for output
+      string path = AppDomain.CurrentDomain.BaseDirectory + "Top20Pizzas.csv";
+      StreamWriter sw;
+      sw = new StreamWriter(path, false);
+
+      //Output to console and tab-delimited text file
       foreach (var topping in pizzaList) {
-        Console.WriteLine(i + ". " + topping.Toppings + ": " + topping.Count);
-        i++;
+        Console.WriteLine("{0}. {1} - {2}",topping.Rank,topping.Toppings,topping.Count);
+        sw.WriteLine("{0}\t{1}\t{2}", topping.Rank, topping.Toppings, topping.Count);
       }
+      sw.Close();
+
+      //Wait for user input to close the app.
       Console.ReadLine();
     }
     private static List<PizzaModel> Top20Pizzas()
